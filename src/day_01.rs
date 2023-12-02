@@ -14,7 +14,7 @@ fn new_digit_word_map<'a>() -> HashMap<&'a str, char> {
     digits
 }
 
-fn words_to_digits(s: &String) -> String {
+fn words_to_digits(s: &str) -> String {
     let chars: Vec<char> = s.chars().collect();
     let digit_word_map = new_digit_word_map();
     let mut new_s = String::new();
@@ -61,7 +61,7 @@ fn first_digit<I>(chars: I) -> char where I: Iterator<Item = char> {
     panic!("No digits found.")
 }
 
-pub fn part_1(s: &String) -> String {
+pub fn part_1(s: &str) -> String {
     let mut cal: Vec<u32> = vec!();
     for line in s.lines() {
         let chars = line.chars();
@@ -75,7 +75,7 @@ pub fn part_1(s: &String) -> String {
     total.to_string()
 }
 
-pub fn part_2(s: &String) -> String {
+pub fn part_2(s: &str) -> String {
     let fixed = words_to_digits(s);
     part_1(&fixed)
 }
