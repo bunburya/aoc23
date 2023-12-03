@@ -1,5 +1,6 @@
 mod day_01;
 mod day_02;
+mod day_03;
 
 use std::{fs, path};
 use std::env;
@@ -10,7 +11,7 @@ fn main() {
     let funcs: [[Option<fn(&str) -> String>; 2]; 25] = [
         [Some(day_01::part_1), Some(day_01::part_2)],
         [Some(day_02::part_1), Some(day_02::part_2)],
-        [None, None],
+        [Some(day_03::part_1), Some(day_03::part_2)],
         [None, None],
         [None, None],
         [None, None],
