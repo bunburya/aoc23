@@ -21,6 +21,19 @@ fn get_match_count(s: &str) -> u32 {
     winners.intersection(&ours).count() as u32
 }
 
+
+pub fn part_1(s: &str) -> String {
+    let mut total = 0;
+    for line in s.lines() {
+        let our_winners = get_match_count(line);
+        if our_winners > 0 {
+            let score = 2u32.pow(our_winners - 1);
+            total += score;
+        }
+    }
+    total.to_string()
+}
+
 pub fn part_2(s: &str) -> String {
     let mut additional_copies: VecDeque<u32> = VecDeque::new();
     let mut num_cards = 0;
@@ -43,15 +56,4 @@ pub fn part_2(s: &str) -> String {
         }
     }
     num_cards.to_string()
-}
-pub fn part_1(s: &str) -> String {
-    let mut total = 0;
-    for line in s.lines() {
-        let our_winners = get_match_count(line);
-        if our_winners > 0 {
-            let score = 2u32.pow(our_winners - 1);
-            total += score;
-        }
-    }
-    total.to_string()
 }
