@@ -169,7 +169,7 @@ fn get_gear_ratio(
     None
 }
 
-pub fn part_1(s: &str) -> String {
+pub(crate) fn part_1(s: &str) -> String {
     let (grid, all_rows, all_cols) = get_grid(s);
     let mut num_s: String;
     let mut num_start_col: Option<usize>;
@@ -215,7 +215,7 @@ pub fn part_1(s: &str) -> String {
     total.to_string()
 }
 
-pub fn part_2(s: &str) -> String {
+pub(crate) fn part_2(s: &str) -> String {
     let (grid, all_rows, all_cols) = get_grid(s);
     let mut ratio: Option<i32>;
     let mut total = 0;

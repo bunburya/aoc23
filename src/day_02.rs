@@ -47,7 +47,7 @@ fn minimum_power(rounds_str: &str) -> i32 {
     max.values().product::<i32>()
 }
 
-pub fn part_1(s: &str) -> String {
+pub(crate) fn part_1(s: &str) -> String {
     let mut bag = HashMap::new();
     bag.insert("red", 12);
     bag.insert("green", 13);
@@ -66,7 +66,7 @@ pub fn part_1(s: &str) -> String {
     total.to_string()
 }
 
-pub fn part_2(s: &str) -> String {
+pub(crate) fn part_2(s: &str) -> String {
     let mut total = 0;
     for line in s.lines() {
         let (_, rounds_str) = partition_game_str(line);

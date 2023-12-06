@@ -22,7 +22,7 @@ fn get_match_count(s: &str) -> u32 {
 }
 
 
-pub fn part_1(s: &str) -> String {
+pub(crate) fn part_1(s: &str) -> String {
     let mut total = 0;
     for line in s.lines() {
         let our_winners = get_match_count(line);
@@ -34,7 +34,7 @@ pub fn part_1(s: &str) -> String {
     total.to_string()
 }
 
-pub fn part_2(s: &str) -> String {
+pub(crate) fn part_2(s: &str) -> String {
     let mut additional_copies: VecDeque<u32> = VecDeque::new();
     let mut num_cards = 0;
 
