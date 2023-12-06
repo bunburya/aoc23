@@ -4,6 +4,7 @@ mod day_03;
 mod day_04;
 mod day_05;
 mod common;
+mod day_06;
 
 use std::{fs, path};
 use std::env;
@@ -17,7 +18,7 @@ fn main() {
         [Some(day_03::part_1), Some(day_03::part_2)],
         [Some(day_04::part_1), Some(day_04::part_2)],
         [Some(day_05::part_1), Some(day_05::part_2)],
-        [None, None],
+        [Some(day_06::part_1), Some(day_06::part_2)],
         [None, None],
         [None, None],
         [None, None],
