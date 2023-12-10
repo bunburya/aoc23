@@ -185,18 +185,16 @@ pub(crate) fn part_1(s: &str) -> String {
                     num_start_col = Some(ic);
                 }
                 num_s.push(*c);
-            } else {
-                if ! num_s.is_empty() {
-                    // We have encountered a non-digit after a string of digits, ie, we have a full
-                    // number
-                    if has_adjacent_symbol(
-                        &grid, ir, num_start_col.unwrap(), ic.saturating_sub(1), all_rows, all_cols
-                    ) {
-                        total += num_s.parse::<i32>().unwrap();
-                    }
-                    num_start_col = None;
-                    num_s = String::new();
+            } else if ! num_s.is_empty() {
+                // We have encountered a non-digit after a string of digits, ie, we have a full
+                // number
+                if has_adjacent_symbol(
+                    &grid, ir, num_start_col.unwrap(), ic.saturating_sub(1), all_rows, all_cols
+                ) {
+                    total += num_s.parse::<i32>().unwrap();
                 }
+                num_start_col = None;
+                num_s = String::new();
             }
         }
         if ! num_s.is_empty() {

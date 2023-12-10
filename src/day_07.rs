@@ -58,7 +58,7 @@ impl Hand {
             };
         };
 
-        let mut highest_count = card_counts[most_common];
+        let highest_count = card_counts[most_common];
 
         let type_value = match card_counts.len() {
             5 => 0,  // High card

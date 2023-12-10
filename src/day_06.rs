@@ -1,4 +1,4 @@
-use crate::common::{parse_str, split_prefix};
+use crate::common::{parse_on_whitespace, split_prefix};
 
 fn count_winning_moves(t: i64, d: i64) -> i64 {
     // "-b formula" for quadratic equations
@@ -24,9 +24,9 @@ pub(crate) fn part_1(s: &str) -> String {
     let (_, time_s) = split_prefix(&t_line);
     let (_, dist_s) = split_prefix(&d_line);
 
-    let times = parse_str::<i64>(&time_s)
+    let times = parse_on_whitespace::<i64>(&time_s)
         .expect("Could not parse times.");
-    let distances = parse_str::<i64>(&dist_s)
+    let distances = parse_on_whitespace::<i64>(&dist_s)
         .expect("Could not parse distances.");
 
     let mut product = 1;

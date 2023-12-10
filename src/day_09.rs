@@ -1,7 +1,6 @@
 use std::ops::{Sub, Add};
-use std::process::Output;
 
-use crate::common::parse_str;
+use crate::common::parse_on_whitespace;
 
 fn all_same<T>(seq: &Vec<T>) -> bool where T: Ord {
     for i in 1..seq.len() {
@@ -34,7 +33,7 @@ fn extrapolate<T>(seq: &Vec<T>) -> T where T: Sub<Output = T> + Add<Output = T> 
 pub(crate) fn part_1(s: &str) -> String {
     let mut total: i64 = 0;
     for line in s.lines() {
-        total += extrapolate(&parse_str::<i64>(line).unwrap())
+        total += extrapolate(&parse_on_whitespace::<i64>(line).unwrap())
 
     }
     total.to_string()
@@ -43,7 +42,7 @@ pub(crate) fn part_1(s: &str) -> String {
 pub(crate) fn part_2(s: &str) -> String {
     let mut total: i64 = 0;
     for line in s.lines() {
-        let mut seq = parse_str::<i64>(line).unwrap();
+        let mut seq = parse_on_whitespace::<i64>(line).unwrap();
         seq.reverse();
         total += extrapolate(&seq);
     }

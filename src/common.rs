@@ -24,11 +24,6 @@ pub(crate) fn split_prefix(s: &str) -> (&str, &str) {
     (&s[0..colon_i], &s[colon_i+2..])
 }
 
-pub(crate) fn get_new_posn(posn: &(usize, usize), movement: (i32, i32)) -> (usize, usize) {
-    let new_row = ((posn.0 as i32) - (movement.0 as i32)) as usize;
-    let new_col = ((posn.0 as i32) - (movement.0 as i32)) as usize;
-    (new_row, new_col)
-}
 
 #[derive(Clone, Debug)]
 pub(crate) struct Grid<T> {
