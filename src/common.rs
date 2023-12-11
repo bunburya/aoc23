@@ -1,4 +1,4 @@
-use std::fmt::Debug;
+use std::fmt::{Debug, Display};
 use std::str::FromStr;
 
 /// Parse a whitespace-delimited string into a vector of objects of type T.
@@ -27,13 +27,17 @@ pub(crate) fn split_prefix(s: &str) -> (&str, &str) {
 
 #[derive(Clone, Debug)]
 pub(crate) struct Grid<T> {
-    vec: Vec<Vec<T>>
+    rows: Vec<Vec<T>>
 }
 
 impl<T> Grid<T> {
 
+    pub(crate) fn from_rows(rows: Vec<Vec<T>>) -> Grid<T> {
+        Grid { rows }
+    }
+
     pub(crate) fn shape(&self) -> (usize, usize) {
-        (self.vec.len(), self.vec[0].len())
+        (self.rows.len(), self.rows[0].len())
     }
 
     pub(crate) fn is_valid(&self, posn: &(usize, usize)) -> bool {
@@ -47,13 +51,10 @@ impl<T> Grid<T> {
         let mut n: Vec<Option<(usize, usize)>> = vec!();
         for r_diff in diffs.iter() {
             for c_diff in diffs.iter() {
-                //println!("Testing ({r_diff}, {c_diff})");
                 if *r_diff == 0 && *c_diff == 0 {
-                    //println!("No diff; continuing");
                     continue
                 }
                 if (! incl_diag) && *r_diff != 0 && *c_diff != 0 {
-                    //println!("Diagonal; continuing");
                     continue
                 }
                 n.push(self.apply_offset(posn, &(*r_diff, *c_diff)));
@@ -93,22 +94,27 @@ impl<T> Grid<T> {
             current_col: 0
         }
     }
+
+    pub(crate) fn rows(&self) -> &Vec<Vec<T>> {
+        &self.rows
+    }
 }
 
-impl<T> Grid<T> where T: Copy + Eq {
-
-    pub(crate) fn get(&self, posn: &(usize, usize)) -> Option<T> {
-        let (row, col) = *posn;
-        let (row_n, col_n) = self.shape();
-        if row >= row_n || col >= col_n {
-            None
-        } else {
-            Some(self.vec[row][col])
+impl<T> Grid<T> where T: Display {
+    pub(crate) fn print(&self) {
+        for r in &self.rows {
+            for c in r {
+                print!("{c}");
+            }
+            println!();
         }
     }
+}
+
+impl<T> Grid<T> where T: Eq {
 
     pub(crate) fn find(&self, t: &T) -> Option<(usize, usize)> {
-        for (row_i, row) in self.vec.iter().enumerate() {
+        for (row_i, row) in self.rows.iter().enumerate() {
             for (col_i, col) in row.iter().enumerate() {
                 if col == t {
                     return Some((row_i, col_i))
@@ -116,6 +122,43 @@ impl<T> Grid<T> where T: Copy + Eq {
             }
         }
         None
+    }
+
+    /// Search through the column at the given index and return the index of the first row where
+    /// t is found in the column.
+    pub(crate) fn find_row(&self, col: usize, t: &T) -> Option<usize> {
+        if col >= self.rows[0].len() {
+            return None
+        }
+        for (i, row) in self.rows().iter().enumerate() {
+            if row[col] == *t {
+                return Some(i)
+            }
+        }
+        None
+    }
+
+    /// Search through the row at the given index and return the index of the first column where
+    /// t is found in the row.
+    pub(crate) fn find_col(&self, row: usize, t: &T) -> Option<usize> {
+        if row >= self.rows.len() {
+            return None
+        }
+        return self.rows[row].iter().position(|i| i == t)
+    }
+
+}
+
+impl<T> Grid<T> where T: Copy {
+
+    pub(crate) fn get(&self, posn: &(usize, usize)) -> Option<T> {
+        let (row, col) = *posn;
+        let (row_n, col_n) = self.shape();
+        if row >= row_n || col >= col_n {
+            None
+        } else {
+            Some(self.rows[row][col])
+        }
     }
 
     pub(crate) fn iter_items(&self) -> GridItemIterator<T> {
@@ -135,7 +178,7 @@ impl FromStr for Grid<char> {
             let v: Vec<char> = line.chars().collect();
             vec.push(v);
         }
-        Ok(Grid { vec })
+        Ok(Grid { rows: vec })
     }
 }
 
